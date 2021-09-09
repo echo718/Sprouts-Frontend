@@ -1,5 +1,4 @@
 import { useState,useContext } from 'react';
-import React from 'react';
 import { BgContext } from '../Theme/BgProvider';
 import { FontContext } from '../Theme/FontProvider';
 import store from "../../redux/Store";
