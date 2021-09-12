@@ -8,7 +8,7 @@ import '../../App.css';
 import { Link } from 'react-router-dom';
 
 export default function HomePage() {
-    const carouselStyle = { margin: "auto 20%" }
+    const carouselStyle = { margin: "auto 20%",minHeight:'39rem' }
     const contentStyle = { width:"100%", color: "yellow" } as const
     const imgStyle = { width: "100%", height: "30em" }   
 
@@ -39,7 +39,6 @@ export default function HomePage() {
                     </div>
                 </Carousel>
             </div>
-
         </React.Fragment>
 
     )

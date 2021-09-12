@@ -1,8 +1,8 @@
-import React, { useState,useContext  } from "react";
+import React, { useState, useContext } from "react";
 import { useMutation } from '@apollo/client';
 import MaterialTable, { MTableToolbar } from 'material-table';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Add, Update, Delete} from '../../apis/apis';
+import { Add, Update, Delete } from '../../apis/apis';
 import { BgContext } from '../Theme/BgProvider';
 import { FontContext } from '../Theme/FontProvider';
 
@@ -19,7 +19,7 @@ export default function StudyPlayground(props: any) {
     const [bgcolor] = useContext(BgContext);
     const [fontcolor] = useContext(FontContext);
 
-    const handelDelete =  (oldDataId) => {
+    const handelDelete = (oldDataId) => {
         del({ variables: { studyId: oldDataId } }).then(r => {
             if (r.errors) {
                 let err = r.errors.join("\n");
@@ -27,22 +27,22 @@ export default function StudyPlayground(props: any) {
                 return
             }
             if (r) {
-              const dataNew =  data.filter(item => item.id !== r.data.delStudy.id)
-              setData(dataNew)
+                const dataNew = data.filter(item => item.id !== r.data.delStudy.id)
+                setData(dataNew)
             }
         }).catch(reason => {
             console.log(reason)
         })
-       
+
     }
 
     const handelUpdate = async (index, newData, oldData) => {
 
-      //if not update image, result(imageURI) is previously one.
-        result = result ? result :newData.imageURI
+        //if not update image, result(imageURI) is previously one.
+        result = result ? result : newData.imageURI
         //if delete, result is null
         result = (deleteRes === 1) ? '' : result
-     
+
         update({ variables: { studyId: newData.id, content: newData.content, language: newData.language, imageURI: result, } }).then(r => {
             if (r.errors) {
                 let err = r.errors.join("\n");
@@ -53,7 +53,7 @@ export default function StudyPlayground(props: any) {
                 let index = newData.id
                 data.map(item => item.id === index ?
                     ((item.content === r.data.editStudy.content) && (item.language === r.data.editStudy.language) && (item.imageURI === result)) : '')
-              
+
                 //trigger setData
                 var dataOthers = data.filter(item => item.id !== index)
                 newData.imageURI = result
@@ -64,14 +64,14 @@ export default function StudyPlayground(props: any) {
             console.log(reason)
         })
         //if delete image
-        deleteRes= 0
+        deleteRes = 0
     }
 
     const handelAdd = (newData) => {
-        console.log(typeof(newData),Object.entries(newData).length)
-        if(Object.entries(newData).length !== 3) {
+        console.log(typeof (newData), Object.entries(newData).length)
+        if (Object.entries(newData).length !== 3) {
             alert("Upload Failed. Please upload full information(badge & study content & subject)")
-        }else{
+        } else {
             add({ variables: { content: newData.content, language: newData.language, imageURI: result, } }).then(r => {
                 if (r.errors) {
                     let err = r.errors.join("\n");
@@ -86,7 +86,7 @@ export default function StudyPlayground(props: any) {
             })
         }
 
-      
+
     }
 
     const handelFocus = (value: any) => {
@@ -190,14 +190,14 @@ export default function StudyPlayground(props: any) {
 
     //If img exist, click delete button to delete
     var deleteRes = 0
-  
+
     const deleteImage = () => {
         alert("Delete Image Successful.")
         deleteRes = 1
     }
 
-    const    downloadCsv = (data, fileName) => {
-//         //解决中文乱码
+    const downloadCsv = (data, fileName) => {
+        //         //解决中文乱码
         var newData = "\ufeff" + data;
 
         const finalFileName = fileName.endsWith(".csv") ? fileName : `${fileName}.csv`;
@@ -209,16 +209,33 @@ export default function StudyPlayground(props: any) {
 
     const badgeStyle = { margin: " 1%", fontfamily: "ocr-b-std, monospace", fontSize: "2em" }
     const limitedStyle = { margin: " 1%" }
-    const spanStyle = { fontSize: "45px", color:fontcolor !== 'black' ? fontcolor : "white", padding: "0.5em 1em", borderRadius: "90%", background: bgcolor !== 'transparent' ? bgcolor : "#B5EF8A", backgroundImage: "" }
+    const spanStyle = { fontSize: "45px", color: fontcolor !== 'black' ? fontcolor : "white", padding: "0.5em 1em", borderRadius: "90%", background: bgcolor !== 'transparent' ? bgcolor : "#B5EF8A", backgroundImage: "" }
+
+    const getSelectedValue = (index) => {
+        switch(index){
+            case 0:
+                return 'Chinese';
+            case 1:
+                return 'English';
+            case 2:
+                return 'Mathematics';
+            default :
+                return 'null'
+        }
+    }
+
+    //get "subject" selected values
+    const getSelectValue = (e) => {
+        let index = e.target.options.selectedIndex
+       const value = getSelectedValue(index)
+       return value
+    }
 
     return (
         <React.Fragment>
-            {/* <Nav /> */}
+            <div className="container-fluid" style={{ marginBottom: '5px' }}>
+                <MaterialTable
 
-
-            <div className="container-fluid" >
-                <MaterialTable 
-                    
                     title=""
                     columns={
                         [
@@ -238,17 +255,15 @@ export default function StudyPlayground(props: any) {
                                             }}
                                         />
                                         <button style={{ marginTop: "5px", width: "10em", display: editProps.value ? "block" : "none" }} className="btn btn-danger" onClick={deleteImage}>Delete  File</button>
-                                        
                                     </div>
                                 )
-
                             },
                             {
                                 title: 'Study Content', field: 'content',
                                 editComponent: (editProps) => (
                                     <input
                                         autoFocus={true}
-                                        style={{ width: "100px",height:"40px" }}
+                                        style={{ width: "100px", height: "40px" }}
                                         defaultValue={editProps.value}
                                         onChange={(e) => {
                                             editProps.onChange(e.target.value = handelFocus(e.target.value))
@@ -260,16 +275,18 @@ export default function StudyPlayground(props: any) {
                             {
                                 title: 'Subject', field: 'language',
                                 editComponent: (editProps) => (
+                                    //for subject content, only allowed to select from droplist
+                                    <select name="language" id="language" 
+                                    onChange={e => {
+                                        getSelectValue(e);
+                                        editProps.onChange(e.target.value)
+                                    }}
+                                    >
+                                        <option value="Chinese">Chinese</option>
+                                        <option value="English">English</option>
+                                        <option value="Mathematics">Mathematics</option>
+                                    </select>
 
-                                    <input
-                                        autoFocus={true}
-                                        style={{ width: "100px",height:"40px" }}
-                                        defaultValue={editProps.value}
-                                        onChange={(e) => {
-                                            editProps.onChange(e.target.value = handelFocus(e.target.value))
-                                        }
-                                        }
-                                    />
                                 )
                             },
                             {
@@ -280,7 +297,7 @@ export default function StudyPlayground(props: any) {
 
                     data={data}
                     options={{
-                        
+
                         addRowPosition: 'first',
                         //   maxBodyHeight: '500px',
                         showEmptyDataSourceMessage: false,
@@ -295,34 +312,33 @@ export default function StudyPlayground(props: any) {
                             csv: true,
                             pdf: false
                         },
-                         //   review img and createAt format
-                            exportCsv: (columns, data) => {
-                                // Turn headers into array of strings
-                                const headerRow = columns.map(col => {
-                                      return col.title;
-                                });
-                               
-                                const newHeaderRow = headerRow.filter( i => i !== "Study Record")
-                                const dataRows = data.map(({ data, ...row }) => Object.values(row));
-                                
+                        //   review img and createAt format
+                        exportCsv: (columns, data) => {
+                            // Turn headers into array of strings
+                            const headerRow = columns.map(col => {
+                                return col.title;
+                            });
 
-                                let newData:Array<any> = []
-                              
-                                //select columns can be exported  
-                                 newData =dataRows.map( i =>['',i[1],i[2],i[5]])
-                                 //change "created date" format
-                                for(let i=0;i<newData.length;i++){
-                                    const a = newData[i][3].toString()
-                                    newData[i][3] = a.substring(0,10)
-                                    newData[i][0] = 'Badge'
-                                }
-                                const delimiter = ",";
-                                const csvContent = [newHeaderRow, ...newData].map(e => e.join(delimiter)).join("\n");
- 
-                                const csvFileName = "Study Record";  
-                                
-                                downloadCsv(csvContent, csvFileName);
-                            },    
+                            const newHeaderRow = headerRow.filter(i => i !== "Study Record")
+                            const dataRows = data.map(({ data, ...row }) => Object.values(row));
+
+                            let newData: Array<any> = []
+
+                            //select columns can be exported  
+                            newData = dataRows.map(i => ['', i[1], i[2], i[5]])
+                            //change "created date" format
+                            for (let i = 0; i < newData.length; i++) {
+                                const a = newData[i][3].toString()
+                                newData[i][3] = a.substring(0, 10)
+                                newData[i][0] = 'Badge'
+                            }
+                            const delimiter = ",";
+                            const csvContent = [newHeaderRow, ...newData].map(e => e.join(delimiter)).join("\n");
+
+                            const csvFileName = "Study Record";
+
+                            downloadCsv(csvContent, csvFileName);
+                        },
 
                         search: true,
                         pageSize: pageSize,
@@ -342,11 +358,11 @@ export default function StudyPlayground(props: any) {
                                     <MTableToolbar {...propsCopy} />
                                     <div style={badgeStyle}>
                                         Congratulations! <span style={spanStyle}> {Kidname}</span>.You have already got
-                                         <span style={spanStyle}>{data.length}</span> 
-                                         <span>{data.length === 1 ? 'badge.' : 'badges.'}</span>
+                                        <span style={spanStyle}>{data.length}</span>
+                                        <span>{data.length === 1 ? 'badge.' : 'badges.'}</span>
                                     </div>
                                     <div style={limitedStyle}>
-                                        <button type="button" className="btn btn-info"  style={{ backgroundColor: bgcolor !== 'transparent' ? bgcolor : '',color: fontcolor !== 'black' ? fontcolor : 'black' }} onClick={handelCreatedTimeRange}>Limited Created Time </button>
+                                        <button type="button" className="btn btn-info" style={{ backgroundColor: bgcolor !== 'transparent' ? bgcolor : '', color: fontcolor !== 'black' ? fontcolor : 'black' }} onClick={handelCreatedTimeRange}>Limited Created Time </button>
                                         {/* limited created time  */}
 
                                         <div style={showCreatedSearch ? noShowtimerangeStyle : showtimerangeStyle} id="timeRange">
@@ -367,7 +383,7 @@ export default function StudyPlayground(props: any) {
 
 
                     editable={{
-                      
+
                         onRowAdd:
                             (newData: any) =>
                                 new Promise((resolve, reject) => {
@@ -402,9 +418,7 @@ export default function StudyPlayground(props: any) {
                                     const dataDelete = [...data];
                                     const index = oldData.tableData.id;
                                     dataDelete.splice(index, 1);
-                                    //console.log(oldData)
                                     handelDelete(oldData.id)
-                                    // this.setState({ data: [...dataDelete] });
 
                                     resolve("")
                                 }, 1000)

@@ -3,7 +3,6 @@ import VerticalColumn from './VerticalCol';
 import NumbersGameContext from './GameContext';
 import Restart from './Restart';
 import '../../App.css';
-
 export interface IColumnProps {
     id: string;
     numberIds: string[];
@@ -43,6 +42,8 @@ const initialData = {
 
     }
 };
+
+
 class GameBase extends React.Component<any, INumbersGameState> {
 
     public constructor(props: any) {
@@ -52,6 +53,7 @@ class GameBase extends React.Component<any, INumbersGameState> {
 
         this.state = { ...initialData, win: false };
     }
+    
 
     public onDragEnd(result: any) {
         const { destination, source, draggableId } = result;
@@ -108,6 +110,5 @@ class GameBase extends React.Component<any, INumbersGameState> {
 export function isSortedAsc(list: number[]): boolean {
     return list.every((val: any, i: number, arr: any) => !i || (parseInt(val, 10) >= arr[i - 1]));
 }
-
 
 export default GameBase;

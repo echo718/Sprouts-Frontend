@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ShowSelfInfo from "./ShowSelfInfo";
 import Findkid from './Findkid';
 import GitLogin from "./GitLogin";
@@ -16,7 +16,6 @@ export default function KidProfile(code) {
     const [accessToken] = useMutation(Login_AccessToken)
   //  const [index, setIndex] = useState(0) //open "personal information" bar
     const [pageIndex, setPageIndex] = useState(false) // for log out jump to gitlogin
-
 
     const  setCookie = (key, value, day, kidId) => {
         //let expires = day * 86400 * 1000  // 时间转化成 ms
@@ -46,19 +45,14 @@ export default function KidProfile(code) {
 
                         isGetSelfInfo ? setIsGetSelfInfo(false) : setIsGetSelfInfo(true)
                      
-                     //   window.location.reload()
 
                         setCookie(r.data.login.jwt, '', 60000000, r.data.login.kid.id)
 
-                        // setIsGetSelfInfo(true)
                     }
                 }).catch(reason => {
                      console.log(reason)
                 })
-             //   setIndex(1) //only be executed once
 
-
-           // }
         } 
     }
    
@@ -74,7 +68,7 @@ export default function KidProfile(code) {
     }
       
     return (
-        <div className="container">
+        <div className="container" style={{ minHeight:'39rem'}}>
        
             {   //open 'personal information' bar directly
              //   index === 0 ?
