@@ -4,10 +4,12 @@ import StudyPlayground from './StudyPlayground';
 import gql from "graphql-tag";
 
 export default function AccessData() {
+  
   var kidId = Number(window.localStorage.getItem("kidId"))
+  
   const Studies_QUERY = gql`
   {
-    studies(id:${kidId}){
+    studies(first:50,id:${kidId}){
       nodes{
         id
         content

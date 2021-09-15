@@ -68,8 +68,8 @@ export default function StudyPlayground(props: any) {
     }
 
     const handelAdd = (newData) => {
-        console.log(typeof (newData), Object.entries(newData).length)
-        if (Object.entries(newData).length !== 3) {
+        // newData has two situations: one is not upload or input data; the other one is upload data then delete it, which would lead to  null string('').
+        if (Object.entries(newData).length !== 3 || newData.language ==='' || newData.content === '' || newData.imageURI === '') {
             alert("Upload Failed. Please upload full information(badge & study content & subject)")
         } else {
             add({ variables: { content: newData.content, language: newData.language, imageURI: result, } }).then(r => {
@@ -212,22 +212,25 @@ export default function StudyPlayground(props: any) {
     const spanStyle = { fontSize: "45px", color: fontcolor !== 'black' ? fontcolor : "white", padding: "0.5em 1em", borderRadius: "90%", background: bgcolor !== 'transparent' ? bgcolor : "#B5EF8A", backgroundImage: "" }
 
     const getSelectedValue = (index) => {
+      
         switch(index){
-            case 0:
-                return 'Chinese';
             case 1:
-                return 'English';
+                return 'Chinese';
             case 2:
+                return 'English';
+            case 3:
                 return 'Mathematics';
             default :
-                return 'null'
+                return null
         }
     }
 
     //get "subject" selected values
     const getSelectValue = (e) => {
-        let index = e.target.options.selectedIndex
+       
+       let index = e.target.options.selectedIndex
        const value = getSelectedValue(index)
+    
        return value
     }
 
@@ -282,6 +285,7 @@ export default function StudyPlayground(props: any) {
                                         editProps.onChange(e.target.value)
                                     }}
                                     >
+                                        <option value=''>Select Subject</option>
                                         <option value="Chinese">Chinese</option>
                                         <option value="English">English</option>
                                         <option value="Mathematics">Mathematics</option>
