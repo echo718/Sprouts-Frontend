@@ -1,6 +1,6 @@
 import React from 'react';
 import head from '../../assets/head.jpg';
-import { useState,useContext } from 'react';
+import { useState, useContext } from 'react';
 import EditSelf from './EditSelf';
 import { BgContext } from '../Theme/BgProvider';
 import { FontContext } from '../Theme/FontProvider';
@@ -90,11 +90,11 @@ const SelfInfo = (data) => {
                     )
                     :
                     <div>
-                         <img src={head} alt="" style={imgStyle} />
+                        <img src={head} alt="" style={imgStyle} />
                     </div>
-                   
+
                 }
-                <label htmlFor="file" className="btn btn-primary mt-4" style={{ backgroundColor: bgcolor !== 'transparent' ? bgcolor : '',color: fontcolor !== 'black' ? fontcolor : 'black'  }} >
+                <label htmlFor="file" className="btn btn-primary mt-4" style={{ backgroundColor: bgcolor !== 'transparent' ? bgcolor : '', color: fontcolor !== 'black' ? fontcolor : 'black' }} >
                     <input
                         id="file"
                         type="file"
@@ -115,19 +115,37 @@ const SelfInfo = (data) => {
                 <div className="col-10 ">
                     <table className="table  " style={tableStyle}>
                         <tbody>
-                            <tr className="table-warning">
+                            <tr
+                                 // mode changes:background and font color
+                                className={(bgcolor !== 'transparent' && bgcolor) ? bgcolor : "table-warning"}
+                                style={{
+                                    backgroundColor: (bgcolor !== 'transparent' || bgcolor) ? bgcolor : null,
+                                    color: (fontcolor !== 'transparent' && fontcolor) ? fontcolor : 'black'
+                                }}>
                                 <th scope="row" > Account Name</th>
                                 <td>{data.data.self.gitHub}
                                 </td>
                             </tr>
-                            <tr className="table-success">
+                            <tr
+                                // mode changes:background and font color
+                                className={(bgcolor !== 'transparent' && bgcolor) ? bgcolor : "table-success"}
+                                style={{
+                                    backgroundColor: (bgcolor !== 'transparent' || bgcolor) ? bgcolor : null,
+                                    color: (fontcolor !== 'transparent' && fontcolor) ? fontcolor : 'black'
+                                }}>
                                 <th scope="col" >Kid Name</th>
                                 <th scope="col" >
                                     <input type="text" className="editableInput" placeholder={data.data.self.name} style={{ display: show ? "none" : "block" }} onChange={e => getNameInfo(e.target.value)} />
                                     <label htmlFor="" className="editableLabel" style={{ display: show ? "block" : "none" }}> {data.data.self.name}</label>
                                 </th>
                             </tr>
-                            <tr className="table-danger">
+                            <tr
+                              // mode changes:background and font color
+                                className={(bgcolor !== 'transparent' && bgcolor) ? bgcolor : "table-danger"}
+                                style={{
+                                    backgroundColor: (bgcolor !== 'transparent' || bgcolor) ? bgcolor : null,
+                                    color: (fontcolor !== 'transparent' && fontcolor) ? fontcolor : 'black'
+                                }}>
                                 <th scope="row" >Kid Age</th>
                                 <td>
                                     <input type="text" className="editableInput" placeholder={data.data.self.age} style={{ display: show ? "none" : "block" }} onChange={e => getAgeInfo(e.target.value)} />
@@ -138,13 +156,13 @@ const SelfInfo = (data) => {
                     </table>
                 </div>
                 <div className="col-2" style={{ textAlign: "right" }}>
-                    <button className="btn btn-warning" onClick={editInfo} style={{ backgroundColor: bgcolor !== 'transparent' ? bgcolor : '',color: fontcolor !== 'black' ? fontcolor : 'black' }}>Edit</button>
+                    <button className="btn btn-warning" onClick={editInfo} style={{ backgroundColor: bgcolor !== 'transparent' ? bgcolor : '', color: fontcolor !== 'black' ? fontcolor : 'black' }}>Edit</button>
                 </div>
             </div>
             { //If index is even after click, go to EditSelf component. 
-                (index % 2 === 0 && index !== 0) ?  
+                (index % 2 === 0 && index !== 0) ?
                     <EditSelf name={name} age={age} index={index} imageURI={imageURI} /> :
-                   ''
+                    ''
             }
         </div>
     )
