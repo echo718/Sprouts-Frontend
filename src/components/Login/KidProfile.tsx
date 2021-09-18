@@ -15,13 +15,7 @@ export default function KidProfile(code) {
     const [isGetSelfInfo, setIsGetSelfInfo] = useState(false)
     const [accessToken] = useMutation(Login_AccessToken)
     const [pageIndex, setPageIndex] = useState(false) // click logout button, then jump to logout screen, not show kid profile any more.
-
-    // const  setCookie = (key, value, day, kidId) => {
-    //     let expires = day
-    //     let date = new Date(+ new Date() + expires) // curernt date add stored time
-    //     document.cookie = `${key}*expires=${date.toUTCString()}*username=${kidId}`
-    // }
-//get token from backend
+    //get token from backend
     const findCode = (props) => {
         if (props.code && (isGetSelfInfo === false)) {
             //open & close "personal information" bar
@@ -42,16 +36,13 @@ export default function KidProfile(code) {
                     localStorage.setItem("gitHub", r.data.login.kid.gitHub)
 
                     isGetSelfInfo ? setIsGetSelfInfo(false) : setIsGetSelfInfo(true)
-                    //will be expired after ten minutes 
-                  //  setCookie(r.data.login.jwt, '', 60000, r.data.login.kid.id)
-
                 }
             }).catch(reason => {
                     console.log(reason)
             })
         } 
     }
-//after click logout button
+    //after click logout button
     const logout = () => {
         localStorage.clear()
         localStorage.setItem("Token", '-1')
@@ -72,12 +63,13 @@ export default function KidProfile(code) {
             }
 
             {
+                //if click logout button, jump to welcome screen.otherwise, go to ShowSelfInfo component.
                 pageIndex ?
                     <GitLogin />
                     :
                     <div className="row" >
-
                         {
+                            //if isGetSelfInfo,code,kidId all exist, go to showselfinfo component.
                            ( isGetSelfInfo 
                             &&
                              ( code ? code :window.localStorage.getItem("gitCode"))
@@ -87,7 +79,8 @@ export default function KidProfile(code) {
                                 <ShowSelfInfo id={kidId ? kidId : window.localStorage.getItem("kidId") } code={code ? code :window.localStorage.getItem("gitCode")}/> :
                                 <div></div>
                         }
-                        
+
+                        {/* use kidid to get which kid is, get kid name and set to local storage. */}
                         {kidId ?
                             <Findkid id={kidId} /> :
                             ''}

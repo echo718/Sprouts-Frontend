@@ -7,7 +7,6 @@ import { Selfinfo_QUERY } from '../../apis/apis';
 //if find out kidId at backend, show kid information using component "SelfInfo".
 export default function ShowSelfInfo( { id,code } ) {
     
-  //  var oldData = window.localStorage.getItem("data")
     const GetSelfInfo = () => {
         const { data, loading, error } = useQuery(Selfinfo_QUERY, {
             variables: {
@@ -18,18 +17,16 @@ export default function ShowSelfInfo( { id,code } ) {
 
         if (loading) return <h2>Still loading..</h2>
         if (error) return <h2>There is an error!  </h2>
-        // setOldData(data)
+        
         return (
             <div>
                 <SelfInfo data={data} />
-              
             </div>
         )         
     }
 
     return (
         <div>
-          
             {
              (
                  ( id && code  )

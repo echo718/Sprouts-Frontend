@@ -1,5 +1,6 @@
 import React, { useState, createContext } from 'react';
 
+//for background color theme
 const BgContext = createContext<[
 	bgcolor: any,
 	setBgColor: any

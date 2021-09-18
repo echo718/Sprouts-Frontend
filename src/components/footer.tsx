@@ -14,7 +14,7 @@ const Footer = () => {
            
             <a
                 className="App-link"
-                href="http://192.168.1.67:3000"
+                href="https://aumsa.github.io/2021-MSA-content/#/"
                 target="_self"
                  style={{ color:fontcolor }}
                // rel="noopener noreferrer"

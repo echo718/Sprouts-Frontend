@@ -14,7 +14,6 @@
 }
 body{
   position:relative;
-  background-color: red;
 }
 .App-header {
   min-height: 80vh;
@@ -40,9 +39,8 @@ body{
     transform: rotate(360deg);
   }
 }
-.navWholeStyle {
-  background-color: 'rgba(0,0,0,0)';
-}
+
+
 
 .footer{
   width: 100%;
@@ -69,9 +67,12 @@ body{
     color: 	#FF8888;
   }
 }
+.navWholeStyle {
+  background-color: 'rgba(0,0,0,0)';
+}
 .navStyle:hover{
   border-radius: 80%;
-  background-color: 			#99FF33;
+  background-color:  #98FB98;
 }
 .homepageH3{
   color:	#99FF33;

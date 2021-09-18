@@ -10,12 +10,13 @@ import { FontContext } from '../Theme/FontProvider';
 
 export default function Nav() {
 
-    const [toggle, setToggle] = useState(false)
-    // design theme
+    const [toggle, setToggle] = useState(false)//used to show drop list for collapse.
+    // design theme using context hook
     const [bgcolor, setBgColor] = useContext(BgContext);
     const [fontcolor, setFontColor] = useContext(FontContext);
     const [dropdownName, setDropdownName] = useState('Theme')
 
+    //collapse has drop list
     useEffect(() => {
         var myCollapse = document.getElementById('collapseTarget')
         var bsCollapse = new Collapse(myCollapse, { toggle: false })
@@ -26,20 +27,21 @@ export default function Nav() {
 
     const logo = { color: "white", width: "300px", height: "65px", paddingLeft: "5%" }
 
+    //different themes:Maroon,Teal and transparent
     const darkTheme = () => {
          setBgColor('Maroon')
          setFontColor('white')
-        setDropdownName('Maroon Mode')
+        setDropdownName('Maroon Theme')
     }
     const lightTheme = () => {
         setBgColor('Teal')
         setFontColor('silver')
-        setDropdownName('Teal Mode')
+        setDropdownName('Teal Theme')
     }
     const regularTheme = () => {
         setBgColor('transparent')
         setFontColor('black')
-        setDropdownName('Theme')
+        setDropdownName('Standard Theme')
     }
 
     return (
@@ -79,13 +81,13 @@ export default function Nav() {
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown"  style={{ backgroundColor: bgcolor }}>
                                 <li style={{ color: fontcolor }} >
-                                    <button className="dropdown-item" onClick={darkTheme} >Maroon Mode</button>
+                                    <button className="dropdown-item" onClick={darkTheme} >Maroon Theme</button>
                                 </li>
                                 <li style={{ color: fontcolor }} >
-                                    <button className="dropdown-item" onClick={lightTheme} >Teal Mode</button>
+                                    <button className="dropdown-item" onClick={lightTheme} >Teal Theme</button>
                                 </li>
                                 <li  style={{ color: fontcolor }}>
-                                    <button className="dropdown-item" onClick={regularTheme}>Standard Mode</button>
+                                    <button className="dropdown-item" onClick={regularTheme}>Standard Theme</button>
                                 </li>
                             </ul>
                         </li>

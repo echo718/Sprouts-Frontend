@@ -77,7 +77,6 @@ class GameBase extends React.Component<any, INumbersGameState> {
         const numbers = this.state.column.numberIds.map((numberId: string) => this.state.numbers[numberId]);
         return (
             <React.Fragment>
-                {console.log(numbers)}
                 <div className="container" >
                     <h3 className='gametitle' style={{ fontFamily: "ocr-b-std, monospace",color:"#FF0088 ",textAlign:"center",backgroundColor:"	#D28EFF",height:"3em",lineHeight:"3em",borderRadius:"80%" }}>Order them! I know you can!</h3>
 

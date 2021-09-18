@@ -47,20 +47,20 @@ const SelfInfo = (data) => {
 
             if (handleBeforeUpload(file)) {
                 reader.onload = function () {
-                    // reader.results当完成onload后会将图片转为base64
-                    // 后端只要解析base64对应的字符串即可
+                    // reader.results will used to transfer picture to base64
+                    //backend will get  string format
                     const result = this.result;
 
                     setImageURI(result as any)
                 };
 
-                reader.readAsDataURL(file); // 得到经过base64编码的图片信息
+                reader.readAsDataURL(file); // get base64 format information for the uploaded picture
             }
         }
 
     }
 
-    //check size of photo
+    //check size and type of uploaded picture
     const handleBeforeUpload = (file) => {
         if (file) {
             const sizeOk = file.size < (1024 * 1024);
@@ -79,6 +79,7 @@ const SelfInfo = (data) => {
     return (
         <div className="row" >
             <div className="col-3 mt-2" style={{ textAlign: "center" }}>
+                {/* for picture section */}
                 {data.data.self.imageURI
                     ?
                     (
@@ -94,6 +95,7 @@ const SelfInfo = (data) => {
                     </div>
 
                 }
+
                 <label htmlFor="file" className="btn btn-primary mt-4" style={{ backgroundColor: bgcolor !== 'transparent' ? bgcolor : '', color: fontcolor !== 'black' ? fontcolor : 'black' }} >
                     <input
                         id="file"
@@ -159,7 +161,8 @@ const SelfInfo = (data) => {
                     <button className="btn btn-warning" onClick={editInfo} style={{ backgroundColor: bgcolor !== 'transparent' ? bgcolor : '', color: fontcolor !== 'black' ? fontcolor : 'black' }}>Edit</button>
                 </div>
             </div>
-            { //If index is even after click, go to EditSelf component. 
+            { //go to EditSelf component to allow edit kid information 
+              // if index is even after click. 
                 (index % 2 === 0 && index !== 0) ?
                     <EditSelf name={name} age={age} index={index} imageURI={imageURI} /> :
                     ''

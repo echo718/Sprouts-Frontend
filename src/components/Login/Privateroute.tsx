@@ -15,7 +15,7 @@ const PrivateRoute = ({component: Component, ...props}) => {
         } else { // jump to login page
             alert("Please login first!")
             return <Redirect to={{
-                pathname: '/login',
+                pathname: '/Gitlogin',
                 state: {
                     from: p.location.pathname
                 }

@@ -6,19 +6,25 @@ import { Add, Update, Delete } from '../../apis/apis';
 import { BgContext } from '../Theme/BgProvider';
 import { FontContext } from '../Theme/FontProvider';
 
+//show study information using material table
 export default function StudyPlayground(props: any) {
-    const [data, setData] = useState(props.data)
+
+    const [data, setData] = useState(props.data)// used to store backend study table's data
     const Kidname = window.localStorage.getItem("KidName")
+    // call APIs
     const [add] = useMutation(Add)
     const [update] = useMutation(Update)
     const [del] = useMutation(Delete)
+    // define style for material table
     const pageSize = window.innerWidth > 1024 ? 10 : 5
+    //used for the search function in material table 
     const [searchFrom, setSearchFrom] = useState('');
     const [searchTo, setSearchTo] = useState('');
     const [showCreatedSearch, setShowCreatedSearch] = useState(false);
+    //design different themes
     const [bgcolor] = useContext(BgContext);
     const [fontcolor] = useContext(FontContext);
-
+    // call delete 
     const handelDelete = (oldDataId) => {
         del({ variables: { studyId: oldDataId } }).then(r => {
             if (r.errors) {
@@ -34,8 +40,8 @@ export default function StudyPlayground(props: any) {
             console.log(reason)
         })
 
-    }
-
+    } 
+    //call update useMutation(update)
     const handelUpdate = async (index, newData, oldData) => {
 
         //if not update image, result(imageURI) is previously one.
@@ -66,7 +72,7 @@ export default function StudyPlayground(props: any) {
         //if delete image
         deleteRes = 0
     }
-
+    //call add useMutation(add)
     const handelAdd = (newData) => {
         // newData has two situations: one is not upload or input data; the other one is upload data then delete it, which would lead to  null string('').
         if (Object.entries(newData).length !== 3 || newData.language ==='' || newData.content === '' || newData.imageURI === '') {
@@ -88,7 +94,7 @@ export default function StudyPlayground(props: any) {
 
 
     }
-
+    //when user input data, will real-time check using Regular Expression
     const handelFocus = (value: any) => {
         let special_regular = new RegExp(
             "[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"
@@ -99,9 +105,7 @@ export default function StudyPlayground(props: any) {
         }
         return reflow_special
     }
-
-
-
+    //deal with time range for the date search function
     const handelCreatedTimeRange = () => {
         if (showCreatedSearch) {
             setShowCreatedSearch(false)
@@ -117,9 +121,7 @@ export default function StudyPlayground(props: any) {
         width: '300px', margin: '20px', Visibility: "block",
     }
 
-
     //setstate to the date search time range
-
     const searchCreatedFrom = (e) => {
         setSearchFrom(e.target.value)
     }
@@ -127,9 +129,8 @@ export default function StudyPlayground(props: any) {
         setSearchTo(e.target.value)
     }
 
-    //     //for "search created time range" create oldData to get previously data
+    // for date search function, create oldData to get previously data
     var oldData = []
-
     const handelCreatedSearch = () => {
         if (oldData.length === 0) {
             oldData = props.data
@@ -142,13 +143,13 @@ export default function StudyPlayground(props: any) {
         }
     }
 
-    //clear the search filter
+    //clear the search filter for date search function
     const handelCreatedClear = () => {
         setData(props.data)
         setShowCreatedSearch(false)
-
     }
 
+    // for upload pictures function
     var result
     const onFileChange = (e) => {
         e.preventDefault();
@@ -160,19 +161,17 @@ export default function StudyPlayground(props: any) {
 
             if (handleBeforeUpload(file)) {
                 reader.onload = function () {
-                    // reader.results当完成onload后会将图片转为base64
-                    // 后端只要解析base64对应的字符串即可
+                    // reader.results will transfer picture to base64 format
                     result = this.result;
-
                     //  setImgURI(result as any)
                     alert("Upload Image Successful.")
                 };
-                reader.readAsDataURL(file)// 得到经过base64编码的图片信息
+                reader.readAsDataURL(file)// get uploaded picture's information using base64
             }
         }
     }
 
-    //check size of photo
+    //check size and type of uploaded picture
     const handleBeforeUpload = (file) => {
         if (file) {
             const sizeOk = file.size < (1024 * 1024);
@@ -188,16 +187,15 @@ export default function StudyPlayground(props: any) {
         }
     }
 
-    //If img exist, click delete button to delete
+    //If img exist, allowed to click delete button to delete
     var deleteRes = 0
-
     const deleteImage = () => {
         alert("Delete Image Successful.")
         deleteRes = 1
     }
-
+    //allowed to download data to CSV format
     const downloadCsv = (data, fileName) => {
-        //         //解决中文乱码
+        //  for Chinese messy code
         var newData = "\ufeff" + data;
 
         const finalFileName = fileName.endsWith(".csv") ? fileName : `${fileName}.csv`;
@@ -210,9 +208,8 @@ export default function StudyPlayground(props: any) {
     const badgeStyle = { margin: " 1%", fontfamily: "ocr-b-std, monospace", fontSize: "2em" }
     const limitedStyle = { margin: " 1%" }
     const spanStyle = { fontSize: "45px", color: fontcolor !== 'black' ? fontcolor : "white", padding: "0.5em 1em", borderRadius: "90%", background: bgcolor !== 'transparent' ? bgcolor : "#B5EF8A", backgroundImage: "" }
-
+    //only can select three different subjects for "Subject" field
     const getSelectedValue = (index) => {
-      
         switch(index){
             case 1:
                 return 'Chinese';
@@ -225,12 +222,10 @@ export default function StudyPlayground(props: any) {
         }
     }
 
-    //get "subject" selected values
+    //get "Subject" field selected values
     const getSelectValue = (e) => {
-       
        let index = e.target.options.selectedIndex
        const value = getSelectedValue(index)
-    
        return value
     }
 
@@ -238,13 +233,13 @@ export default function StudyPlayground(props: any) {
         <React.Fragment>
             <div className="container-fluid" style={{ marginBottom: '5px' }}>
                 <MaterialTable
-
                     title=""
                     columns={
-                        [
+                        [   
+                            // "badge" field
                             {
-                                title: 'Badge', field: 'imageURI',
-                                render: rowData => <img src={rowData.imageURI} alt='' style={{ width: "50px", borderRadius: '50%' }} />,
+                                title: 'Badge', field: 'imageURI',filtering:false,
+                                render: rowData => <img src={rowData.imageURI} alt='' style={{ width: "50px",borderRadius:"20%" }} />,
                                 editComponent: (editProps) => (
                                     <div style={{ textAlign: "left" }}>
                                         <input
@@ -261,6 +256,7 @@ export default function StudyPlayground(props: any) {
                                     </div>
                                 )
                             },
+                            //"Study Content" field
                             {
                                 title: 'Study Content', field: 'content',
                                 editComponent: (editProps) => (
@@ -275,6 +271,7 @@ export default function StudyPlayground(props: any) {
                                     />
                                 )
                             },
+                            //"Subject" field
                             {
                                 title: 'Subject', field: 'language',
                                 editComponent: (editProps) => (
@@ -290,9 +287,9 @@ export default function StudyPlayground(props: any) {
                                         <option value="English">English</option>
                                         <option value="Mathematics">Mathematics</option>
                                     </select>
-
                                 )
                             },
+                            // "created data" filed, and not allowed to be changed.
                             {
                                 title: 'Created Date', field: 'created', type: 'date', editable: "never",
                             },
@@ -303,7 +300,6 @@ export default function StudyPlayground(props: any) {
                     options={{
 
                         addRowPosition: 'first',
-                        //   maxBodyHeight: '500px',
                         showEmptyDataSourceMessage: false,
                         actionsColumnIndex: -1,
                         rowStyle: {
@@ -334,7 +330,7 @@ export default function StudyPlayground(props: any) {
                             for (let i = 0; i < newData.length; i++) {
                                 const a = newData[i][3].toString()
                                 newData[i][3] = a.substring(0, 10)
-                                newData[i][0] = 'Badge'
+                                newData[i][0] = 'Badges'
                             }
                             const delimiter = ",";
                             const csvContent = [newHeaderRow, ...newData].map(e => e.join(delimiter)).join("\n");
@@ -391,8 +387,6 @@ export default function StudyPlayground(props: any) {
                         onRowAdd:
                             (newData: any) =>
                                 new Promise((resolve, reject) => {
-
-
                                     setTimeout(() => {
                                         handelAdd(newData)
 
@@ -401,9 +395,7 @@ export default function StudyPlayground(props: any) {
                                 }
                                 ),
                         onRowUpdate: (newData, oldData) =>
-
                             new Promise((resolve, reject) => {
-
                                 setTimeout(() => {
 
                                     const dataUpdate: any = [...data];
@@ -428,9 +420,7 @@ export default function StudyPlayground(props: any) {
                                 }, 1000)
                             })
                     }}
-
                 />
-
             </div>
         </React.Fragment>
     );

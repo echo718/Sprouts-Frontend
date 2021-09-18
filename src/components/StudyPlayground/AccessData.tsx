@@ -1,8 +1,8 @@
 import { useQuery  } from "@apollo/client";
-//import { Studies_QUERY } from '../../apis/apis';
 import StudyPlayground from './StudyPlayground';
 import gql from "graphql-tag";
 
+//get study playground's data after login successful.
 export default function AccessData() {
   
   var kidId = Number(window.localStorage.getItem("kidId"))
