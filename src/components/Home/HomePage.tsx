@@ -7,6 +7,7 @@ import studybanner from '../../assets/studybanner.jpg';
 import '../../App.css';
 import { Link } from 'react-router-dom';
 
+//a carousel shows here, when click each picture, will link to different pages using router 
 export default function HomePage() {
     const carouselStyle = { margin: "auto 20%",minHeight:'39rem' }
     const contentStyle = { width:"100%", color: "yellow" } as const
@@ -15,6 +16,7 @@ export default function HomePage() {
     return (
         <React.Fragment>
             <div style={carouselStyle}>
+               
                 <Carousel autoplay>
                     <div style={contentStyle} >
                         <Link to="/AccessData">

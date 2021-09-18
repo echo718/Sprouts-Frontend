@@ -2,6 +2,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import React from 'react';
 
 const DropableWrapper = (props: any) =>
+//vertical display data
   <Droppable droppableId={props.droppableId} direction={'vertical'}>
     {(provided: any) => (
        <div className={props.className}

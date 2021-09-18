@@ -1,14 +1,12 @@
 import React from 'react';
-import GitLogin from './GitLogin';
+// import GitLogin from './GitLogin';
 
-export default function Login() {
-
-
-   
-    return (
-        <React.Fragment>
-            <GitLogin />
-        </React.Fragment>
-    )
-}
+// //go to login page, will use this component to call gitlogin component.
+// export default function Login() {
+//     return (
+//         <React.Fragment>
+//             <GitLogin />
+//         </React.Fragment>
+//     )
+// }
 

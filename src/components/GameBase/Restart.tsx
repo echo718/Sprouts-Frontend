@@ -1,5 +1,5 @@
 import React from 'react';
-import useSound from 'use-sound';
+import useSound from 'use-sound';//use this to play radio
 import  cheers from '../../assets/sounds/cheers.wav';
 
 const Restart = (props: any) => {

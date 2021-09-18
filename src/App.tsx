@@ -5,7 +5,7 @@ import AccessData from './components/StudyPlayground/AccessData';
 import Footer from './components/footer';
 import GameBase from './components/GameBase/GameBase';
 import HomePage from './components/Home/HomePage';
-import Login from './components/Login/Login';
+import GitLogin from './components/Login/GitLogin';
 import Nav from './components/Nav/nav';
 import PrivateRoute from './components/Login/Privateroute';
 import { BgProvider } from './components/Theme/BgProvider';
@@ -21,7 +21,7 @@ export const Routers: Array<RouteModel> = [
   { path: "/", component: HomePage, name: "homePage", exact: true },
   { path: "/AccessData", component: AccessData, name: "accessdata", exact: false },
   { path: '/GameBase', component: GameBase, name: "gamebase", exact: false },
-  { path: '/login', component: Login, name: "login", exact: false }
+  { path: '/GitLogin', component: GitLogin, name: "gitLogin", exact: false }
 ]
 
 function App() {

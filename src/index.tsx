@@ -11,7 +11,7 @@ import { setContext } from 'apollo-link-context';
 import ApolloClient from "apollo-client";
 import 'bootstrap/dist/js/bootstrap.bundle.js'; 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
-//test
+
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {

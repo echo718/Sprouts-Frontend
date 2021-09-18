@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
+//elements that can be dragged.
 const DraggableWrapper = (props: any) =>
   <Draggable draggableId={props.draggableId} index={props.index}>
     {(provided: any) => (
@@ -8,8 +9,6 @@ const DraggableWrapper = (props: any) =>
         {props.children}
       </div>
     )}
-  </Draggable>
-
-  
+  </Draggable>  
 
 export default DraggableWrapper;

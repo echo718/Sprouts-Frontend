@@ -23,6 +23,7 @@ export interface INumbersGameState {
     win: boolean;
 }
 
+//set the initial data.
 const initialData = {
     column: {
         id: 'column-1',
@@ -39,22 +40,21 @@ const initialData = {
         'eight': { id: 'eight', content: '8' },
         'nine': { id: 'nine', content: '9' },
         'ten': { id: 'ten', content: '10' },
-
     }
 };
-
 
 class GameBase extends React.Component<any, INumbersGameState> {
 
     public constructor(props: any) {
         super(props);
+
         this.onDragEnd = this.onDragEnd.bind(this);
         this.restartGame = this.restartGame.bind(this)
 
         this.state = { ...initialData, win: false };
     }
     
-
+    //When drag is finished
     public onDragEnd(result: any) {
         const { destination, source, draggableId } = result;
 
@@ -64,9 +64,11 @@ class GameBase extends React.Component<any, INumbersGameState> {
         const numberIds = Array.from(column.numberIds);
         numberIds.splice(source.index, 1);
         numberIds.splice(destination.index, 0, draggableId);
+        console.log(numberIds)
         const numbers = numberIds.map((numberId: string) => parseInt(this.state.numbers[numberId].content, 10));
+        //judge whether these numbers are ascending or not. ascending => win=true.
         const win = isSortedAsc(numbers);
-
+        // Each time after drag, update the column data to "newcolumn".
         this.updateState(column, numberIds, win);
     }
 
@@ -75,11 +77,14 @@ class GameBase extends React.Component<any, INumbersGameState> {
         const numbers = this.state.column.numberIds.map((numberId: string) => this.state.numbers[numberId]);
         return (
             <React.Fragment>
-                {/* <Nav /> */}
+                {console.log(numbers)}
                 <div className="container" >
                     <h3 className='gametitle' style={{ fontFamily: "ocr-b-std, monospace",color:"#FF0088 ",textAlign:"center",backgroundColor:"	#D28EFF",height:"3em",lineHeight:"3em",borderRadius:"80%" }}>Order them! I know you can!</h3>
+
                     <Restart win={this.state.win} onRestart={this.restartGame} />
+                     {/* DragDropContext defines the drag zone */}
                     <NumbersGameContext onDragEnd={this.onDragEnd}>
+                        {/* define the droppable block and draggable elements.  */}
                         <VerticalColumn column={this.state.column} items={numbers} />
                     </NumbersGameContext>
                 </div>
@@ -87,7 +92,7 @@ class GameBase extends React.Component<any, INumbersGameState> {
 
         )
     }
-
+    //go back to the initaldata 
     private restartGame() {
         this.setState({ ...initialData, win: false });
     }
@@ -106,7 +111,7 @@ class GameBase extends React.Component<any, INumbersGameState> {
     }
 
 }
-
+//use an array to judge, if the next number is smaller than the previous one.
 export function isSortedAsc(list: number[]): boolean {
     return list.every((val: any, i: number, arr: any) => !i || (parseInt(val, 10) >= arr[i - 1]));
 }

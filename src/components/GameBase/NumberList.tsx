@@ -9,7 +9,7 @@ interface IDraggableListItems {
 const NumberList = (props: IDraggableListItems) =>
   <div className={props.className}> {props.items.map(toNumberBox)} </div>
 
-
+//go to number box for each number.
 function toNumberBox(item: INumberItemProps, position: number) {
   return <NumberBox key={item.id}  itemPosition={position} value={item.id} content={item.content} />
 }

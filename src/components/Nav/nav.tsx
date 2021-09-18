@@ -66,7 +66,7 @@ export default function Nav() {
                             <Link className="nav-link " style={{ color: fontcolor }} to="/GameBase" >Game Base</Link>
                         </li>
                         <li className="nav-item navStyle m-2">
-                            <Link className="nav-link " style={{ color: fontcolor }} to="/Login" >
+                            <Link className="nav-link " style={{ color: fontcolor }} to="/Gitlogin" >
                                 {window.localStorage.getItem("Token") === '-1' || window.localStorage.getItem("Token") === null || window.localStorage.getItem("Token") === '' ?
                                     "Login" :
                                     "My Profile"
