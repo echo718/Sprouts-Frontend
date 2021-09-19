@@ -10,7 +10,7 @@ export default function GitLogin() {
     const Login = () => {
         const client_id = '519bd96d57a3139af825';
         const authorize_uri = 'https://github.com/login/oauth/authorize';
-        const redirect_uri = 'http://localhost:3000/Gitlogin';
+        const redirect_uri = 'https://sproutsfrontend.azurewebsites.net/Gitlogin';
         window.location.href = `${authorize_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}`;
     }
 
