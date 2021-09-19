@@ -13,10 +13,6 @@ import 'bootstrap/dist/css/bootstrap.css';
         <Story />  </FontProvider></BgProvider></Router>
          
     }],
-    // argTypes: {
-    //     backgroundColor: { control: 'color' },
-    //     color: { control: 'color' },
-    // },
   };
 
   

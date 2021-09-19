@@ -1,9 +1,9 @@
 import { Carousel } from 'antd';
 import 'antd/dist/antd.css';
 import React from 'react';
-import loginbanner from '../../assets/loginbanner.jpg';
-import homecontent1 from '../../assets/homecontent1.PNG';
-import homecontent2 from '../../assets/homecontent2.PNG';
+import homecontent3 from '../../assets/homecontent3.jpg';
+import homecontent1 from '../../assets/homecontent1.jpg';
+import homecontent2 from '../../assets/homecontent2.jpg';
 import '../../App.css';
 import { Link } from 'react-router-dom';
 
@@ -16,26 +16,22 @@ export default function HomePage() {
     return (
         <React.Fragment>
             <div style={carouselStyle}>
-               
                 <Carousel autoplay>
                     <div style={contentStyle} >
                         <Link to="/AccessData">
                             <img src={homecontent1} style={imgStyle} alt="studybanner" />
-                            <div className="homepageH3">Build your study playground now!</div>
                         </Link>
 
                     </div>
                     <div style={contentStyle}>
                         <Link to="/GameBase">
                             <img src={homecontent2} style={imgStyle} alt="gamebanner" />
-                            <div className="homepageH3" >Win the number game here!</div>
                         </Link>
 
                     </div>
                     <div style={contentStyle}>
                         <Link to="/Login">
-                            <img src={loginbanner} style={imgStyle} alt="loginbanner" />
-                            <div className="homepageH3" >Login now.</div>
+                            <img src={homecontent3} style={imgStyle} alt="loginbanner" />
                         </Link>
 
                     </div>

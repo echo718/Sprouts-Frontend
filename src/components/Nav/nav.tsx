@@ -69,10 +69,7 @@ export default function Nav() {
                         </li>
                         <li className="nav-item navStyle m-2">
                             <Link className="nav-link " style={{ color: fontcolor }} to="/Gitlogin" >
-                                {window.localStorage.getItem("Token") === '-1' || window.localStorage.getItem("Token") === null || window.localStorage.getItem("Token") === '' ?
-                                    "Login" :
-                                    "My Profile"
-                                }
+                                    My Profile
                             </Link>
                         </li>
                         <li className="nav-item dropdown   m-2">
