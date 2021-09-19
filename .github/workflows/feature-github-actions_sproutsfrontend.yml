@@ -6,7 +6,8 @@ name: Build and deploy Node.js app to Azure Web App - SproutsFrontEnd
 on:
   push:
     branches:
-      - feature/github-actions
+       - main
+      - feature/*
   workflow_dispatch:
 
 jobs:
@@ -53,4 +54,4 @@ jobs:
           app-name: 'SproutsFrontEnd'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6F2AE13AF861485298A45BDCF6451AB5 }}
-          package: .
+          package: './build'
