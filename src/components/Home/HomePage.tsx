@@ -9,9 +9,9 @@ import { Link } from 'react-router-dom';
 
 //a carousel shows here, when click each picture, will link to different pages using router 
 export default function HomePage() {
-    const carouselStyle = { margin: "auto 20%",minHeight:'39rem' }
+    const carouselStyle = { margin: "auto 20%",minHeight:'27rem' }
     const contentStyle = { width:"100%", color: "yellow" } as const
-    const imgStyle = { width: "100%", height: "30esm" }   
+    const imgStyle = { width: "100%", height: "27esm" }   
 
     return (
         <React.Fragment>

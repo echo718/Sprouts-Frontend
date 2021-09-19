@@ -10,23 +10,24 @@ export default function GitLogin() {
     const Login = () => {
         const client_id = '519bd96d57a3139af825';
         const authorize_uri = 'https://github.com/login/oauth/authorize';
-        const redirect_uri = 'http://localhost:3000/Gitlogin';
+        const redirect_uri = 'https://sproutsfrontend.azurewebsites.net/Gitlogin';
         window.location.href = `${authorize_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}`;
     }
 
     const loginStyle = { backgroundImage: `url(${unnamed})`, width: "100%", height: "200px", paddingTop: "5%", textAlign: "center" } as const
 
     return (
-        <div className="container">
+        <div className="container" style={{ minHeight:'30rem' }}>
             {/* if githubcode exist and not is null, will set this value to local storage "code" */}
             {
                 githubCode ?
                     window.localStorage.setItem("code", githubCode)
                     : ''
             }
-            {console.log(
-                 ((window.localStorage.getItem("Token") !== '-1') && (githubCode ? githubCode : window.localStorage.getItem("code")))
-            )}
+            {
+                window.localStorage.getItem("Token")
+            }
+          
             {/* if code exist, show kid profile, otherwise, show login button;
                 if not click logout button when closed chrome last time, will show kidprofile too*/}
             {
