@@ -17,7 +17,7 @@ export default function GitLogin() {
     const loginStyle = { backgroundImage: `url(${unnamed})`, width: "100%", height: "200px", paddingTop: "5%", textAlign: "center" } as const
 
     return (
-        <div className="container">
+        <div className="container" style={{ minHeight:'30rem' }}>
             {/* if githubcode exist and not is null, will set this value to local storage "code" */}
             {
                 githubCode ?

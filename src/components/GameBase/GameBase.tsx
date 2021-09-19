@@ -78,7 +78,7 @@ class GameBase extends React.Component<any, INumbersGameState> {
         return (
             <React.Fragment>
                 <div className="container" >
-                    <h3 className='gametitle' style={{ fontFamily: "ocr-b-std, monospace",color:"#FF0088 ",textAlign:"center",backgroundColor:"	#D28EFF",height:"3em",lineHeight:"3em",borderRadius:"80%" }}>Order them! I know you can!</h3>
+                    <h3 className='gametitle' style={{ fontFamily: "ocr-b-std, monospace",color:"#FF0088 ",textAlign:"center",backgroundColor:"	#D28EFF",height:"em",lineHeight:"3em",borderRadius:"80%" }}>Order them! I know you can!</h3>
 
                     <Restart win={this.state.win} onRestart={this.restartGame} />
                      {/* DragDropContext defines the drag zone */}

@@ -7,7 +7,7 @@ interface IVerticalContextProps {
 }
 
 const GameContext = (props: IVerticalContextProps) =>
-  <div className="dnd-game">
+  <div className="dnd-game" >
     <DragDropContext onDragEnd={props.onDragEnd}>
       {props.children}
     </DragDropContext>
