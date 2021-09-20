@@ -24,10 +24,6 @@ export default function GitLogin() {
                     window.localStorage.setItem("code", githubCode)
                     : ''
             }
-            {
-                window.localStorage.getItem("Token")
-            }
-          
             {/* if code exist, show kid profile, otherwise, show login button;
                 if not click logout button when closed chrome last time, will show kidprofile too*/}
             {

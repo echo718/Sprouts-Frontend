@@ -76,7 +76,7 @@ export default function StudyPlayground(props: any) {
     const handelAdd = (newData) => {
         // newData has two situations: one is not upload or input data; the other one is upload data then delete it, which would lead to  null string('').
         if (Object.entries(newData).length !== 3 || newData.language ==='' || newData.content === '' || newData.imageURI === '') {
-            alert("Upload Failed. Please upload full information(badge & study content & subject)")
+            alert("Upload Failed. Please upload full information(stickers & study content & subject)")
         } else {
             add({ variables: { content: newData.content, language: newData.language, imageURI: result, } }).then(r => {
                 if (r.errors) {
@@ -205,7 +205,7 @@ export default function StudyPlayground(props: any) {
         a.click();
     }
 
-    const badgeStyle = { margin: " 1%", fontfamily: "ocr-b-std, monospace", fontSize: "2em" }
+    const stickerStyle = { margin: " 1%", fontfamily: "ocr-b-std, monospace", fontSize: "2em" }
     const limitedStyle = { margin: " 1%" }
     const spanStyle = { fontSize: "45px", color: fontcolor !== 'black' ? fontcolor : "white", padding: "0.5em 1em", borderRadius: "90%", background: bgcolor !== 'transparent' ? bgcolor : "#B5EF8A", backgroundImage: "" }
     //only can select three different subjects for "Subject" field
@@ -236,9 +236,9 @@ export default function StudyPlayground(props: any) {
                     title=""
                     columns={
                         [   
-                            // "badge" field
+                            // "stickers" field
                             {
-                                title: 'Badge', field: 'imageURI',filtering:false,
+                                title: 'sticker', field: 'imageURI',filtering:false,
                                 render: rowData => <img src={rowData.imageURI} alt='' style={{ width: "50px",borderRadius:"20%" }} />,
                                 editComponent: (editProps) => (
                                     <div style={{ textAlign: "left" }}>
@@ -330,7 +330,7 @@ export default function StudyPlayground(props: any) {
                             for (let i = 0; i < newData.length; i++) {
                                 const a = newData[i][3].toString()
                                 newData[i][3] = a.substring(0, 10)
-                                newData[i][0] = 'Badges'
+                                newData[i][0] = 'stickers'
                             }
                             const delimiter = ",";
                             const csvContent = [newHeaderRow, ...newData].map(e => e.join(delimiter)).join("\n");
@@ -356,10 +356,10 @@ export default function StudyPlayground(props: any) {
                             return (
                                 <div>
                                     <MTableToolbar {...propsCopy} />
-                                    <div style={badgeStyle}>
+                                    <div style={stickerStyle}>
                                         Congratulations! <span style={spanStyle}> {Kidname}</span>.You have already got
                                         <span style={spanStyle}>{data.length}</span>
-                                        <span>{data.length === 1 ? 'badge.' : 'badges.'}</span>
+                                        <span>{data.length === 1 ? 'sticker.' : 'stickers.'}</span>
                                     </div>
                                     <div style={limitedStyle}>
                                         <button type="button" className="btn btn-info" style={{ backgroundColor: bgcolor !== 'transparent' ? bgcolor : '', color: fontcolor !== 'black' ? fontcolor : 'black' }} onClick={handelCreatedTimeRange}>Limited Created Time </button>
