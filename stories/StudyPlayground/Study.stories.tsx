@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri:'http://sproutsui.azurewebsites.net/graphql/'
+  uri:'https://sproutsui.azurewebsites.net/graphql/'
 })
 
 const authLink = setContext((_, { headers }) => {
