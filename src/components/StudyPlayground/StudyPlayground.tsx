@@ -238,7 +238,7 @@ export default function StudyPlayground(props: any) {
                         [   
                             // "stickers" field
                             {
-                                title: 'sticker', field: 'imageURI',filtering:false,
+                                title: 'Sticker', field: 'imageURI',filtering:false,
                                 render: rowData => <img src={rowData.imageURI} alt='' style={{ width: "50px",borderRadius:"20%" }} />,
                                 editComponent: (editProps) => (
                                     <div style={{ textAlign: "left" }}>
