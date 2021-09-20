@@ -16,7 +16,8 @@ export default function HomePage() {
     return (
         <React.Fragment>
             <div style={carouselStyle}>
-                <Carousel autoplay>
+                {/* slide speed is one second */}
+                <Carousel autoplay autoplaySpeed={1000}>
                     <div style={contentStyle} >
                         <Link to="/AccessData">
                             <img src={homecontent1} style={imgStyle} alt="studybanner" />
@@ -30,7 +31,7 @@ export default function HomePage() {
 
                     </div>
                     <div style={contentStyle}>
-                        <Link to="/Login">
+                        <Link to="/Gitlogin">
                             <img src={homecontent3} style={imgStyle} alt="loginbanner" />
                         </Link>
 
