@@ -8,7 +8,6 @@ import { FontContext } from '../Theme/FontProvider';
 
 //show kid information.
 const SelfInfo = (data) => {
-
     const [show, setShow] = useState(true) //uneditable
     const [name, setName] = useState(data.data.self.name)
     const [age, setAge] = useState(data.data.self.age)
@@ -116,9 +115,9 @@ const SelfInfo = (data) => {
 
             {name ? window.localStorage.setItem("KidName", name) : ''}
 
-            <div className="row col-sm-8 col-11 mt-2 ml-1 ">
+            { window.localStorage.getItem("Token") ? '' : alert("Remote Server Error. Refresh page.") }
 
-               
+            <div className="row col-sm-8 col-11 mt-2 ml-1 ">               
 
                 <div className="col-sm-9 col-11 ">
                     <table className="table" style={tableStyle}>
