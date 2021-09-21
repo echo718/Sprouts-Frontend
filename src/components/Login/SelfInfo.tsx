@@ -66,7 +66,7 @@ const SelfInfo = (data) => {
     //check size and type of uploaded picture
     const handleBeforeUpload = (file) => {
         if (file) {
-            const sizeOk = file.size < (1024 * 1024);
+            const sizeOk = file.size < (1024 * 1024); // file size less than 1M
             const typeReg = new RegExp(/^image\/bmp|gif|jpg|jpeg|png$/, 'i');
             const typeOk = typeReg.test(file.type);
 
