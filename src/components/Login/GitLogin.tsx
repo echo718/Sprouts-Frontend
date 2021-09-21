@@ -13,25 +13,26 @@ export default function GitLogin() {
     const [isGetSelfInfo, setIsGetSelfInfo] = useState(false)
     const [accessToken] = useMutation(Login_AccessToken)
     const [kidId, setKidId] = useState()
+
     //get token 
     const findtoken = () => {
-        console.log("findtoken")
+        console.log("findtoken",githubCode)
         //if code exist and haven't get self kid information, will execute blow code.
         if (githubCode && (isGetSelfInfo === false)) {
             //open & close "personal information" bar
             setIsGetSelfInfo(!isGetSelfInfo)
-            console.log("findtoken1")
+            console.log("findtoken1",githubCode)
            //get token from backend
             accessToken({ variables: { code: githubCode } }).then(r => {
                 if (r.errors) {
-                    console.log("findtoken2")
+                    console.log("findtoken2",githubCode)
                         let err = r.errors.join("\n");
                         console.log(err)
                         alert("Remote Server Error! Please try to login again.")
                     return
                 }
                 if (r) {
-                    console.log("findtoken3")
+                    console.log("findtoken3",githubCode)
                     setKidId(r.data.login.kid.id)
 
                     localStorage.setItem("Token", r.data.login.jwt)
@@ -42,11 +43,17 @@ export default function GitLogin() {
                     //if get token, reload page to make githubcode is null. thus, could avoid one senario:
                     //login, url with code from OAuth, click logout button directly. githubcode give value to localstorage.code, and cause fake logout. When go back to login page, will show logout button again.
                     window.location.href="https://sproutsfrontend.azurewebsites.net/Gitlogin"
+                  //window.location.href="http://localhost:3000/Gitlogin"
                 }
             }).catch(reason => {
-                console.log("findtoken4")
-                    console.log(reason)
-                    alert("Remote Server Error!Re-login now.")
+                console.log("findtoken4",githubCode)
+                console.log(reason)
+                //avoid first time cannot get token,ask page to get token again, but only execute one time
+                if(githubCode){
+                    findtoken()
+                    console.log("execute again.")
+                }
+               
             })
         } 
     }
@@ -63,7 +70,7 @@ export default function GitLogin() {
         const client_id = '519bd96d57a3139af825';
         const authorize_uri = 'https://github.com/login/oauth/authorize';
         const redirect_uri = 'https://sproutsfrontend.azurewebsites.net/Gitlogin';
-       //const redirect_uri = 'http://localhost:3000/Gitlogin';
+      // const redirect_uri = 'http://localhost:3000/Gitlogin';
         window.location.href = `${authorize_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}`;
     }
 
