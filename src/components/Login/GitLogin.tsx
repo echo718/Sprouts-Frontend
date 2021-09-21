@@ -1,17 +1,65 @@
 import unnamed from '../../assets/unnamed.jpg';
 import KidProfile from './KidProfile';
+import { Login_AccessToken } from '../../apis/apis';
+import { useMutation } from '@apollo/client';
+import { useState,useEffect} from 'react';
 import React from 'react';
 
-//get code from github after log in git hub website.
+//get code and token.
 export default function GitLogin() {
     //get code from URL.
     const githubCode = window.location.search.substring(1).split('&')[0].split('code=')[1]
+
+    const [isGetSelfInfo, setIsGetSelfInfo] = useState(false)
+    const [accessToken] = useMutation(Login_AccessToken)
+    const [kidId, setKidId] = useState()
+    //get token 
+    const findtoken = () => {
+        //if code exist and haven't get self kid information, will execute blow code.
+        if (githubCode && (isGetSelfInfo === false)) {
+            //open & close "personal information" bar
+            setIsGetSelfInfo(!isGetSelfInfo)
+
+           //get token from backend
+            accessToken({ variables: { code: githubCode } }).then(r => {
+                if (r.errors) {
+                        let err = r.errors.join("\n");
+                        console.log(err)
+                        alert("Remote Server Error! Please try to login again.")
+                    return
+                }
+                if (r) {
+                    setKidId(r.data.login.kid.id)
+
+                    localStorage.setItem("Token", r.data.login.jwt)
+                    localStorage.setItem("kidId", r.data.login.kid.id)
+                    localStorage.setItem("gitHub", r.data.login.kid.gitHub)
+
+                    isGetSelfInfo ? setIsGetSelfInfo(false) : setIsGetSelfInfo(true)
+                    //if get token, reload page to make githubcode is null. thus, could avoid one senario:
+                    //login, url with code from OAuth, click logout button directly. githubcode give value to localstorage.code, and cause fake logout. When go back to login page, will show logout button again.
+                    window.location.href="https://sproutsfrontend.azurewebsites.net/Gitlogin"
+                }
+            }).catch(reason => {
+                    console.log(reason)
+                    alert("Remote Server Error!Re-login now.")
+            })
+        } 
+    }
+    useEffect(() => {
+        if(githubCode){
+            if(githubCode !== window.localStorage.getItem("code")){
+                window.localStorage.setItem("code",githubCode)
+            }
+        }
+    }
+    )
     
     const Login = () => {
         const client_id = '519bd96d57a3139af825';
         const authorize_uri = 'https://github.com/login/oauth/authorize';
         const redirect_uri = 'https://sproutsfrontend.azurewebsites.net/Gitlogin';
-     // const redirect_uri = 'http://localhost:3000/Gitlogin';
+       //const redirect_uri = 'http://localhost:3000/Gitlogin';
         window.location.href = `${authorize_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}`;
     }
 
@@ -19,33 +67,43 @@ export default function GitLogin() {
 
     return (
         <div className="container" style={{ minHeight:'30rem' }}>
-            {/* if githubcode exist and not is null, will set this value to local storage "code" */}
+            {/* if code exist and hasnot log out, go to access token. */}
             {
-                githubCode ?
-                    window.localStorage.setItem("code", githubCode)
-                    : ''
+               githubCode &&  (window.localStorage.getItem("Token") !== '-1')  ?
+                 findtoken():''
             }
+
+            {/* if localstorage donot have code, githubcode will store value to loalstorage. */}
+           {
+               githubCode ?
+               (
+                githubCode !== window.localStorage.getItem("code") ?
+                window.localStorage.setItem("code",githubCode) : ''
+               ):''
+           }
+
             {/* if code exist, show kid profile, otherwise, show login button;
                 if not click logout button when closed chrome last time, will show kidprofile too*/}
             {
-                ((window.localStorage.getItem("Token") !== '-1') && (githubCode ? githubCode : window.localStorage.getItem("code")))
+                (  
+                   (window.localStorage.getItem("Token") !== '-1') 
+                && (githubCode ? githubCode : window.localStorage.getItem("code"))
+                )
                     ?
                     //show kid profile
                     <div>
-                        <KidProfile code={githubCode} />
+                        <KidProfile isGetSelfInfo={isGetSelfInfo} kidId={kidId} code={githubCode}/>
                     </div>
                     :
                     //if login not successful, not show kid profile, show login btn
                     <div style={{ marginTop: "10%", padding: "0 30%" }}>
-
                         <div style={loginStyle}>
                             <h2>Welcome</h2><br />
                             <button className="btn btn-outline-primary" onClick={Login} >Login with GitHub</button>
                             {window.localStorage.setItem("Token", '')}
                         </div>
-
                     </div>            
-            }
+            }           
         </div>
 
     )

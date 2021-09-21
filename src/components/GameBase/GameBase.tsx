@@ -64,7 +64,7 @@ class GameBase extends React.Component<any, INumbersGameState> {
         const numberIds = Array.from(column.numberIds);
         numberIds.splice(source.index, 1);
         numberIds.splice(destination.index, 0, draggableId);
-        console.log(numberIds)
+       
         const numbers = numberIds.map((numberId: string) => parseInt(this.state.numbers[numberId].content, 10));
         //judge whether these numbers are ascending or not. ascending => win=true.
         const win = isSortedAsc(numbers);
