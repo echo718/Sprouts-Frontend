@@ -114,7 +114,7 @@ const SelfInfo = (data) => {
             </div>
 
             {name ? window.localStorage.setItem("KidName", name) : ''}
-
+            {console.log("selfinfo",window.localStorage.getItem("Token"))}
             { window.localStorage.getItem("Token") ? '' : alert("Remote Server Error. Refresh page.") }
 
             <div className="row col-sm-8 col-11 mt-2 ml-1 ">               

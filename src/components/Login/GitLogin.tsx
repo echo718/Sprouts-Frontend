@@ -15,20 +15,23 @@ export default function GitLogin() {
     const [kidId, setKidId] = useState()
     //get token 
     const findtoken = () => {
+        console.log("findtoken")
         //if code exist and haven't get self kid information, will execute blow code.
         if (githubCode && (isGetSelfInfo === false)) {
             //open & close "personal information" bar
             setIsGetSelfInfo(!isGetSelfInfo)
-
+            console.log("findtoken1")
            //get token from backend
             accessToken({ variables: { code: githubCode } }).then(r => {
                 if (r.errors) {
+                    console.log("findtoken2")
                         let err = r.errors.join("\n");
                         console.log(err)
                         alert("Remote Server Error! Please try to login again.")
                     return
                 }
                 if (r) {
+                    console.log("findtoken3")
                     setKidId(r.data.login.kid.id)
 
                     localStorage.setItem("Token", r.data.login.jwt)
@@ -41,6 +44,7 @@ export default function GitLogin() {
                     window.location.href="https://sproutsfrontend.azurewebsites.net/Gitlogin"
                 }
             }).catch(reason => {
+                console.log("findtoken4")
                     console.log(reason)
                     alert("Remote Server Error!Re-login now.")
             })
