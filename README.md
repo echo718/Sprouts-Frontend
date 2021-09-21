@@ -10,7 +10,7 @@ In the project directory, you can run:
 
 Runs the app in the development mode.\
 Open [https://sproutsfrontend.azurewebsites.net](https://sproutsfrontend.azurewebsites.net) to view it in the browser.
-open [https://www.chromatic.com/setup?appId=614881375ab08b003aff4413] to view storybook in the browser.
+open [https://614881375ab08b003aff4413-rfcqkjfdsm.chromatic.com/] to view storybook in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
