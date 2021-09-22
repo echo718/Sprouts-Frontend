@@ -24,7 +24,7 @@ const cache = new InMemoryCache({
 
 const link = new HttpLink({
   //uri: 'https://localhost:5001/graphql/'
-  uri:'http://sproutsui.azurewebsites.net/graphql/'
+  uri:'https://sproutsui.azurewebsites.net/graphql/'
 })
 
 const authLink = setContext((_, { headers }) => {

@@ -64,7 +64,7 @@ class GameBase extends React.Component<any, INumbersGameState> {
         const numberIds = Array.from(column.numberIds);
         numberIds.splice(source.index, 1);
         numberIds.splice(destination.index, 0, draggableId);
-        console.log(numberIds)
+       
         const numbers = numberIds.map((numberId: string) => parseInt(this.state.numbers[numberId].content, 10));
         //judge whether these numbers are ascending or not. ascending => win=true.
         const win = isSortedAsc(numbers);
@@ -78,7 +78,7 @@ class GameBase extends React.Component<any, INumbersGameState> {
         return (
             <React.Fragment>
                 <div className="container" >
-                    <h3 className='gametitle' style={{ fontFamily: "ocr-b-std, monospace",color:"#FF0088 ",textAlign:"center",backgroundColor:"	#D28EFF",height:"3em",lineHeight:"3em",borderRadius:"80%" }}>Order them! I know you can!</h3>
+                    <h3 className='gametitle' style={{ fontFamily: "ocr-b-std, monospace",color:"#FF0088 ",textAlign:"center",backgroundColor:"	#D28EFF",height:"em",lineHeight:"3em",borderRadius:"80%" }}>Order them! I know you can!</h3>
 
                     <Restart win={this.state.win} onRestart={this.restartGame} />
                      {/* DragDropContext defines the drag zone */}

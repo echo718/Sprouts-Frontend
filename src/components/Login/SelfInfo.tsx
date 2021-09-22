@@ -8,7 +8,6 @@ import { FontContext } from '../Theme/FontProvider';
 
 //show kid information.
 const SelfInfo = (data) => {
-
     const [show, setShow] = useState(true) //uneditable
     const [name, setName] = useState(data.data.self.name)
     const [age, setAge] = useState(data.data.self.age)
@@ -50,8 +49,12 @@ const SelfInfo = (data) => {
                     // reader.results will used to transfer picture to base64
                     //backend will get  string format
                     const result = this.result;
+                    if (result) {
+                        alert("Upload picture sucessful.")
+                    }
 
                     setImageURI(result as any)
+                    setIndex(index + 2)
                 };
 
                 reader.readAsDataURL(file); // get base64 format information for the uploaded picture
@@ -63,7 +66,7 @@ const SelfInfo = (data) => {
     //check size and type of uploaded picture
     const handleBeforeUpload = (file) => {
         if (file) {
-            const sizeOk = file.size < (1024 * 1024);
+            const sizeOk = file.size < (1024 * 1024); // file size less than 1M
             const typeReg = new RegExp(/^image\/bmp|gif|jpg|jpeg|png$/, 'i');
             const typeOk = typeReg.test(file.type);
 
@@ -78,7 +81,7 @@ const SelfInfo = (data) => {
 
     return (
         <div className="row" >
-            <div className="col-3 mt-2" style={{ textAlign: "center" }}>
+            <div className="col-sm-3 col-12 mt-2" style={{ textAlign: "center" }}>
                 {/* for picture section */}
                 {data.data.self.imageURI
                     ?
@@ -111,14 +114,16 @@ const SelfInfo = (data) => {
             </div>
 
             {name ? window.localStorage.setItem("KidName", name) : ''}
+            {console.log("selfinfo",window.localStorage.getItem("Token"))}
+            { window.localStorage.getItem("Token") ? '' : alert("Remote Server Error. Refresh page.") }
 
-            <div className="row col-9 mt-2 ">
+            <div className="row col-sm-8 col-11 mt-2 ml-1 ">               
 
-                <div className="col-10 ">
-                    <table className="table  " style={tableStyle}>
+                <div className="col-sm-9 col-11 ">
+                    <table className="table" style={tableStyle}>
                         <tbody>
                             <tr
-                                 // mode changes:background and font color
+                                // mode changes:background and font color
                                 className={(bgcolor !== 'transparent' && bgcolor) ? bgcolor : "table-warning"}
                                 style={{
                                     backgroundColor: (bgcolor !== 'transparent' || bgcolor) ? bgcolor : null,
@@ -142,7 +147,7 @@ const SelfInfo = (data) => {
                                 </th>
                             </tr>
                             <tr
-                              // mode changes:background and font color
+                                // mode changes:background and font color
                                 className={(bgcolor !== 'transparent' && bgcolor) ? bgcolor : "table-danger"}
                                 style={{
                                     backgroundColor: (bgcolor !== 'transparent' || bgcolor) ? bgcolor : null,
@@ -157,12 +162,14 @@ const SelfInfo = (data) => {
                         </tbody>
                     </table>
                 </div>
-                <div className="col-2" style={{ textAlign: "right" }}>
+
+                <div className="col-sm-2 col-1" style={{ textAlign: "right" }}>
                     <button className="btn btn-warning" onClick={editInfo} style={{ backgroundColor: bgcolor !== 'transparent' ? bgcolor : '', color: fontcolor !== 'black' ? fontcolor : 'black' }}>Edit</button>
                 </div>
+
             </div>
             { //go to EditSelf component to allow edit kid information 
-              // if index is even after click. 
+                // if index is even after click. 
                 (index % 2 === 0 && index !== 0) ?
                     <EditSelf name={name} age={age} index={index} imageURI={imageURI} /> :
                     ''

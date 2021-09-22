@@ -9,14 +9,15 @@ import { Link } from 'react-router-dom';
 
 //a carousel shows here, when click each picture, will link to different pages using router 
 export default function HomePage() {
-    const carouselStyle = { margin: "auto 20%",minHeight:'39rem' }
+    const carouselStyle = { margin: "auto 20%",minHeight:'27rem' }
     const contentStyle = { width:"100%", color: "yellow" } as const
-    const imgStyle = { width: "100%", height: "30esm" }   
+    const imgStyle = { width: "100%", height: "27esm" }   
 
     return (
         <React.Fragment>
             <div style={carouselStyle}>
-                <Carousel autoplay>
+                {/* slide speed is one second */}
+                <Carousel autoplay autoplaySpeed={1000}>
                     <div style={contentStyle} >
                         <Link to="/AccessData">
                             <img src={homecontent1} style={imgStyle} alt="studybanner" />
@@ -30,7 +31,7 @@ export default function HomePage() {
 
                     </div>
                     <div style={contentStyle}>
-                        <Link to="/Login">
+                        <Link to="/Gitlogin">
                             <img src={homecontent3} style={imgStyle} alt="loginbanner" />
                         </Link>
 
