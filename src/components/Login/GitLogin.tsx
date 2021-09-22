@@ -17,47 +17,48 @@ export default function GitLogin() {
     //get token 
     const findtoken = useCallback(
         () => {
-        console.log("findtoken", githubCode,isGetSelfInfo)
-        //if code exist and haven't get self kid information, will execute blow code.
-        if (githubCode && (!isGetSelfInfo === true)) {
-            //open & close "personal information" bar
-            setIsGetSelfInfo(!isGetSelfInfo)
-            console.log("findtoken1", githubCode)
-            //get token from backend
-            accessToken({ variables: { code: githubCode } }).then(r => {
-                if (r.errors) {
-                    console.log("findtoken2", githubCode)
-                    let err = r.errors.join("\n");
-                    console.log(err)
-                    alert("Remote Server Error! Please try to login again.")
-                    return
-                }
-                if (r) {
-                    console.log("findtoken3", githubCode)
-                    setKidId(r.data.login.kid.id)
-
-                    localStorage.setItem("Token", r.data.login.jwt)
-                    localStorage.setItem("kidId", r.data.login.kid.id)
-                    localStorage.setItem("gitHub", r.data.login.kid.gitHub)
-
-                    isGetSelfInfo ? setIsGetSelfInfo(false) : setIsGetSelfInfo(true)
-                    
-                    //if get token, reload page to make githubcode is null. thus, could avoid one senario:
-                    //login, url with code from OAuth, click logout button directly. githubcode give value to localstorage.code, and cause fake logout. When go back to login page, will show logout button again.
-                     window.location.href="https://sproutsfrontend.azurewebsites.net/Gitlogin"
-                    // window.location.href = "http://localhost:3000/Gitlogin"    
-                }
-            }).catch(reason => {
-                console.log("findtoken4", githubCode)
-                console.log(reason)
-            })
-        }
-        },
-        [githubCode,isGetSelfInfo,accessToken]
-    )
+            console.log("findtoken", githubCode,isGetSelfInfo)
+           
+            //if code exist and haven't get self kid information, will execute blow code.
+            if (githubCode && (!isGetSelfInfo === true)) {
+                //open & close "personal information" bar
+                setIsGetSelfInfo(!isGetSelfInfo)
+                console.log("findtoken1", githubCode)
+                //get token from backend
+                accessToken({ variables: { code: githubCode } }).then(r => {
+                    if (r.errors) {
+                        console.log("findtoken2", githubCode)
+                        let err = r.errors.join("\n");
+                        console.log(err)
+                        alert("Remote Server Error! Please try to login again.")
+                        return
+                    }
+                    if (r) {
+                        console.log("findtoken3", githubCode)
+                        setKidId(r.data.login.kid.id)
     
+                        localStorage.setItem("Token", r.data.login.jwt)
+                        localStorage.setItem("kidId", r.data.login.kid.id)
+                        localStorage.setItem("gitHub", r.data.login.kid.gitHub)
+    
+                        isGetSelfInfo ? setIsGetSelfInfo(false) : setIsGetSelfInfo(true)
+                        
+                        //if get token, reload page to make githubcode is null. thus, could avoid one senario:
+                        //login, url with code from OAuth, click logout button directly. githubcode give value to localstorage.code, and cause fake logout. When go back to login page, will show logout button again.
+                         window.location.href="https://sproutsfrontend.azurewebsites.net/Gitlogin"
+                         //window.location.href = "http://localhost:3000/Gitlogin"    
+                    }
+                }).catch(reason => {
+                    console.log("findtoken4", githubCode)
+                    console.log(reason)
+                })
+            }
+            },
+        [githubCode,isGetSelfInfo,accessToken],
+    )          
 
     useEffect(() => {
+        console.log("here go to useeffect")
         //save githubcode to localstorage
         if (githubCode) {
             if (githubCode !== window.localStorage.getItem("code")) {
@@ -70,18 +71,18 @@ export default function GitLogin() {
             console.log("useEffect token")
             return;
         }
-        findtoken()
-        console.log("Useeffect",githubCode,isGetSelfInfo,window.localStorage.getItem("code"))
-    },[findtoken,githubCode,isGetSelfInfo]
+       findtoken()
+        console.log("Useeffect",githubCode,isGetSelfInfo,window.localStorage.getItem("code"),window.localStorage.getItem("Token"))
+    }
     )
 
     const Login = () => {
         const client_id = '519bd96d57a3139af825';
         const authorize_uri = 'https://github.com/login/oauth/authorize';
         const redirect_uri = 'https://sproutsfrontend.azurewebsites.net/Gitlogin';
-        // const redirect_uri='http://localhost:3000/Gitlogin'    
+        //const redirect_uri='http://localhost:3000/Gitlogin'    
         window.location.href = `${authorize_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}`;
-        setIsGetSelfInfo(!isGetSelfInfo)
+       // setIsGetSelfInfo(!isGetSelfInfo)
     }
 
     const loginStyle = { backgroundImage: `url(${unnamed})`, width: "100%", height: "200px", paddingTop: "5%", textAlign: "center" } as const
@@ -89,6 +90,7 @@ export default function GitLogin() {
     return (
         <div className="container" style={{ minHeight: '30rem' }}>
             {/* if code exist and hasnot log out, go to access token. */}
+            {console.log("render",isGetSelfInfo)}
           
             {
                 githubCode && (window.localStorage.getItem("Token") !== '-1') && isGetSelfInfo ?
