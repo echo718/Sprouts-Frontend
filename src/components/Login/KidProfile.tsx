@@ -6,21 +6,20 @@ import LogoutBtn from './LogoutBtn';
 
 
 //Show kid information on "profile" page.
-export default function KidProfile({isGetSelfInfo,kidId,code}) {
-  
+export default function KidProfile({ isGetSelfInfo, kidId, code }) {
+
     const [pageIndex, setPageIndex] = useState(false) // click logout button, then jump to logout screen, not show kid profile any more.
-    
+
     //after click logout button
     const logout = () => {
         window.localStorage.clear()
-        localStorage.setItem("Token", '-1')
+        window.localStorage.setItem("Token", '-1')
         alert(" Log out successful.")
-        setPageIndex(true)
+        setPageIndex(!pageIndex)
     }
-      
+
     return (
-        <div className="container" style={{ minHeight:'39rem'}}>
-       
+        <div className="container" style={{ minHeight: '39rem' }}>
             {
                 //if click logout button, jump to welcome screen.otherwise, go to ShowSelfInfo component.
                 pageIndex ?
@@ -29,13 +28,13 @@ export default function KidProfile({isGetSelfInfo,kidId,code}) {
                     <div className="row" >
                         {
                             //if isGetSelfInfo,code,kidId all exist, go to showselfinfo component.
-                           ( isGetSelfInfo 
-                            &&
-                             ( code ? code :window.localStorage.getItem("code"))
-                            && 
-                            kidId ? kidId : window.localStorage.getItem("kidId")
-                             ) ?
-                                <ShowSelfInfo id={kidId ? kidId : window.localStorage.getItem("kidId") } code={code ? code :window.localStorage.getItem("code")}/> :
+                            (isGetSelfInfo
+                                &&
+                                (code ? code : window.localStorage.getItem("code"))
+                                &&
+                                kidId ? kidId : window.localStorage.getItem("kidId")
+                            ) ?
+                                <ShowSelfInfo id={kidId ? kidId : window.localStorage.getItem("kidId")} code={code ? code : window.localStorage.getItem("code")} /> :
                                 <div></div>
                         }
 
@@ -43,8 +42,7 @@ export default function KidProfile({isGetSelfInfo,kidId,code}) {
                         {kidId ?
                             <Findkid id={kidId} /> :
                             ''}
-
-                        <LogoutBtn  logout={() => logout()} />
+                        <LogoutBtn logout={() => logout()} />
 
                     </div>
             }
