@@ -12,16 +12,18 @@ export default function KidProfile({ isGetSelfInfo, kidId, code }) {
 
     //after click logout button
     const logout = () => {
-        if(window.location.search.substring(1).split('&')[0].split('code=')[1]){
-            alert("Are you sure not stay for a while? Let's go to play....")
-            window.location.href="https://sproutsfrontend.azurewebsites.net/Gamebase"
-        }else{
-            window.localStorage.clear()
-            window.localStorage.setItem("Token", '-1')
-            alert(" Log out successful.")
-            setPageIndex(!pageIndex)
-        }
-      
+        // if () {
+        //     alert("Are you sure not stay for a while? Let's play Game one more time.")
+        //     // window.location.href="https://sproutsfrontend.azurewebsites.net/Gamebase"
+        //     window.location.href = "http://localhost:3000/Gamebase"
+        // } else {
+           
+        // }
+        alert(" Log out successful.")
+        window.localStorage.clear()
+        window.localStorage.setItem("Token", '-1')
+        setPageIndex(!pageIndex)
+
     }
 
     return (
@@ -48,7 +50,13 @@ export default function KidProfile({ isGetSelfInfo, kidId, code }) {
                         {kidId ?
                             <Findkid id={kidId} /> :
                             ''}
-                        <LogoutBtn logout={() => logout()} />
+                        {/* after login without jumpping to any page&& URL has code, the logout button will not show. */}
+                        {
+                            window.location.search.substring(1).split('&')[0].split('code=')[1] ?
+                            '' :
+                            <LogoutBtn logout={() => logout()} />
+                        }
+                       
 
                     </div>
             }

@@ -16,7 +16,7 @@ export default function ShowSelfInfo( { id,code } ) {
         })
 
         if (loading) return <h2>Still loading..</h2>
-        if (error) return <h2>There is an error!  </h2>
+        if (error) return <h2>Long time no response.Please login again.  </h2>
          
         return (
             <div>
