@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      CI: 'false'
 
     steps:
       - uses: actions/checkout@v2
@@ -54,5 +56,4 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6F2AE13AF861485298A45BDCF6451AB5 }}
           package: './build'
 
-  env:
-   CI: 'false'
+
