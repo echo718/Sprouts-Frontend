@@ -12,10 +12,16 @@ export default function KidProfile({ isGetSelfInfo, kidId, code }) {
 
     //after click logout button
     const logout = () => {
-        window.localStorage.clear()
-        window.localStorage.setItem("Token", '-1')
-        alert(" Log out successful.")
-        setPageIndex(!pageIndex)
+        if(window.location.search.substring(1).split('&')[0].split('code=')[1]){
+            alert("Are you sure not stay for a while? Let's go to play....")
+            window.location.href="https://sproutsfrontend.azurewebsites.net/Gamebase"
+        }else{
+            window.localStorage.clear()
+            window.localStorage.setItem("Token", '-1')
+            alert(" Log out successful.")
+            setPageIndex(!pageIndex)
+        }
+      
     }
 
     return (
