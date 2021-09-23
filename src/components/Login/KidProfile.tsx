@@ -12,13 +12,6 @@ export default function KidProfile({ isGetSelfInfo, kidId, code }) {
 
     //after click logout button
     const logout = () => {
-        // if () {
-        //     alert("Are you sure not stay for a while? Let's play Game one more time.")
-        //     // window.location.href="https://sproutsfrontend.azurewebsites.net/Gamebase"
-        //     window.location.href = "http://localhost:3000/Gamebase"
-        // } else {
-           
-        // }
         alert(" Log out successful.")
         window.localStorage.clear()
         window.localStorage.setItem("Token", '-1')
